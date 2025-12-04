@@ -43,19 +43,18 @@ WHERE n.Role = 'STUDENT';
             return list;
         }
 
-        public void AddStudent(string vardas, string pavarde, string login, string password, int grupeId)
+        public void AddStudentas(string vardas, string pavarde, string login, string password, int grupesId)
         {
             using var conn = Database.GetConnection();
             using var tx = conn.BeginTransaction();
 
             try
             {
-                
                 string insertUserSql = @"
-INSERT INTO Naudotojai (Vardas, Pavarde, Role, Login, Slaptazodis)
-VALUES (@vardas, @pavarde, 'STUDENT', @login, @password);
-SELECT last_insert_rowid();
-";
+            INSERT INTO Naudotojai (Vardas, Pavarde, Role, Login, Slaptazodis)
+            VALUES (@vardas, @pavarde, 'STUDENTAS', @login, @password);
+            SELECT last_insert_rowid();
+        ";
 
                 long naudotojasId;
 
@@ -66,19 +65,25 @@ SELECT last_insert_rowid();
                     cmdUser.Parameters.AddWithValue("@login", login);
                     cmdUser.Parameters.AddWithValue("@password", password);
 
-                    naudotojasId = (long)cmdUser.ExecuteScalar();
+                    var scalarResult = cmdUser.ExecuteScalar();
+                    if (scalarResult == null || scalarResult == DBNull.Value)
+                    {
+                        throw new InvalidOperationException("Failed to insert Naudotojai or retrieve new Id.");
+                    }
+                    naudotojasId = Convert.ToInt64(scalarResult);
                 }
 
                 string insertStudentSql = @"
-INSERT INTO Studentai (NaudotojasId, GrupeId)
-VALUES (@naudotojasId, @grupeId);
-";
+            INSERT INTO Studentai (NaudotojasId, GrupeId)
+            VALUES (@naudotojasId, @grupeId);
+        ";
 
-                using (var cmdStudent = new SqliteCommand(insertStudentSql, conn, tx))
+                using (var cmdStud = new SqliteCommand(insertStudentSql, conn, tx))
                 {
-                    cmdStudent.Parameters.AddWithValue("@naudotojasId", naudotojasId);
-                    cmdStudent.Parameters.AddWithValue("@grupeId", grupeId);
-                    cmdStudent.ExecuteNonQuery();
+                    cmdStud.Parameters.AddWithValue("@naudotojasId", naudotojasId);
+                    cmdStud.Parameters.AddWithValue("@grupeId", grupesId);
+
+                    cmdStud.ExecuteNonQuery();
                 }
 
                 tx.Commit();
@@ -90,15 +95,21 @@ VALUES (@naudotojasId, @grupeId);
             }
         }
 
-        public void DeleteStudent(int studentasId)
+
+        public void DeleteStudentas(int studentasId)
         {
             using var conn = Database.GetConnection();
             using var tx = conn.BeginTransaction();
 
             try
             {
+                using (var cmdFkOff = new SqliteCommand("PRAGMA foreign_keys = OFF;", conn, tx))
+                {
+                    cmdFkOff.ExecuteNonQuery();
+                }
+
                 int naudotojasId = -1;
-                string getUserSql = "SELECT NaudotojasId FROM Studentai WHERE Id = @id";
+                const string getUserSql = "SELECT NaudotojasId FROM Studentai WHERE Id = @id";
 
                 using (var cmdGet = new SqliteCommand(getUserSql, conn, tx))
                 {
@@ -106,25 +117,37 @@ VALUES (@naudotojasId, @grupeId);
                     var result = cmdGet.ExecuteScalar();
                     if (result != null && result != DBNull.Value)
                     {
-                        naudotojasId = System.Convert.ToInt32(result);
+                        naudotojasId = Convert.ToInt32(result);
                     }
                 }
 
-                string deleteStudentSql = "DELETE FROM Studentai WHERE Id = @id";
-                using (var cmdDelStudent = new SqliteCommand(deleteStudentSql, conn, tx))
+                const string deleteMarksSql = "DELETE FROM Pazymiai WHERE StudentasId = @id";
+                using (var cmdMarks = new SqliteCommand(deleteMarksSql, conn, tx))
                 {
-                    cmdDelStudent.Parameters.AddWithValue("@id", studentasId);
-                    cmdDelStudent.ExecuteNonQuery();
+                    cmdMarks.Parameters.AddWithValue("@id", studentasId);
+                    cmdMarks.ExecuteNonQuery();
+                }
+
+                const string deleteStudentSql = "DELETE FROM Studentai WHERE Id = @id";
+                using (var cmdStud = new SqliteCommand(deleteStudentSql, conn, tx))
+                {
+                    cmdStud.Parameters.AddWithValue("@id", studentasId);
+                    cmdStud.ExecuteNonQuery();
                 }
 
                 if (naudotojasId > 0)
                 {
-                    string deleteUserSql = "DELETE FROM Naudotojai WHERE Id = @id";
-                    using (var cmdDelUser = new SqliteCommand(deleteUserSql, conn, tx))
+                    const string deleteUserSql = "DELETE FROM Naudotojai WHERE Id = @id";
+                    using (var cmdUser = new SqliteCommand(deleteUserSql, conn, tx))
                     {
-                        cmdDelUser.Parameters.AddWithValue("@id", naudotojasId);
-                        cmdDelUser.ExecuteNonQuery();
+                        cmdUser.Parameters.AddWithValue("@id", naudotojasId);
+                        cmdUser.ExecuteNonQuery();
                     }
+                }
+
+                using (var cmdFkOn = new SqliteCommand("PRAGMA foreign_keys = ON;", conn, tx))
+                {
+                    cmdFkOn.ExecuteNonQuery();
                 }
 
                 tx.Commit();
@@ -136,7 +159,18 @@ VALUES (@naudotojasId, @grupeId);
             }
         }
 
+
         public void PridetiStudenta(string vardas, string pavarde, string login, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddStudent(string vardas, string pavarde, string login, string password, int grupeId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteStudent(int studentasId)
         {
             throw new NotImplementedException();
         }

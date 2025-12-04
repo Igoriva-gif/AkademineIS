@@ -116,11 +116,10 @@ namespace AkademineIS
                     foreach (var eil in eilutes)
                     {
                         if (!eil.Pazymys.HasValue)
-                            continue; // пустая ячейка
+                            continue;
 
                         int paz = eil.Pazymys.Value;
 
-                        // диапазон 1–10
                         if (paz < 1 || paz > 10)
                         {
                             MessageBox.Show(
