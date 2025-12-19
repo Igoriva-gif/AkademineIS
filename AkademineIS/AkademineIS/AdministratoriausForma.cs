@@ -189,11 +189,13 @@ namespace AkademineIS
             var pavarde = txtStudentoPavarde.Text.Trim();
             var login = txtStudentoLoginas.Text.Trim();
             var password = txtStudentoSlaptazodis.Text.Trim();
+            var grupeId = cmbStudentoGrupe.SelectedValue?.ToString();
 
             if (string.IsNullOrWhiteSpace(vardas) ||
                 string.IsNullOrWhiteSpace(pavarde) ||
                 string.IsNullOrWhiteSpace(login) ||
-                string.IsNullOrWhiteSpace(password))
+                string.IsNullOrWhiteSpace(password) ||
+                string.IsNullOrWhiteSpace(grupeId))
             {
                 MessageBox.Show("Užpildykite visus studento duomenis.");
                 return;
@@ -213,13 +215,14 @@ namespace AkademineIS
 
             try
             {
-                _studentaiRepo.PridetiStudenta(vardas, pavarde, login, password);
+                _studentaiRepo.AddStudentas(vardas, pavarde, login, password, grupeId);
                 MessageBox.Show("Studentas pridėtas.");
 
                 txtStudentoVardas.Clear();
                 txtStudentoPavarde.Clear();
                 txtStudentoLoginas.Clear();
                 txtStudentoSlaptazodis.Clear();
+                cmbStudentoGrupe.SelectedIndex = -1;
 
                 UzkrautiStudentus();
             }
@@ -257,7 +260,7 @@ namespace AkademineIS
             {
                 try
                 {
-                    _studentaiRepo.DeleteStudent(studentas.Id);
+                    _studentaiRepo.DeleteStudentas(studentas.Id);
                     UzkrautiStudentus();
                 }
                 catch (Exception ex)

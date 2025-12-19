@@ -66,7 +66,7 @@ namespace AkademineIS
                 }
 
                 var role = (user.Role ?? string.Empty).Trim().ToUpperInvariant();
-                MessageBox.Show($"Prisijungta kaip {role} ({user.RodytiInformacija()})");
+                MessageBox.Show($"Prisijungta kaip {role}: {user.Vardas} {user.Pavarde}");
 
                 if (role == "ADMIN")
                 {
@@ -80,7 +80,7 @@ namespace AkademineIS
                     destytojasForm.Show();
                     this.Hide();
                 }
-                else if (role == "STUDENT" || role == "STUDENTAS")
+                else if (role == "STUDENTAS")
                 {
                     var studentasForm = new StudentoForma(user);
                     studentasForm.Show();
@@ -95,6 +95,11 @@ namespace AkademineIS
             {
                 MessageBox.Show("Įvyko klaida: " + ex.Message);
             }
+        }
+
+        private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

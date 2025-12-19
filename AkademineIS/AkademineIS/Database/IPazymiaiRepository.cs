@@ -10,13 +10,13 @@ namespace AkademineIS.Database
     {
         IEnumerable<PazymioEilute> GetByGrupeAndDalykas(int grupeId, int dalykasId);
         void SetPazymys(int studentasId, int dalykasId, int pazymys);
-        public IEnumerable<PazymioEilute> GetForStudent(int studentId)
+        public IEnumerable<PazymioEilute> GetForStudent(int studentasId)
         {
             var list = new List<PazymioEilute>();
 
             using var conn = Database.GetConnection();
             string sql = @"
-                SELECT s.Id,
+                SELECT s.Id AS StudentasId,
                        n.Vardas,
                        n.Pavarde,
                        g.Pavadinimas AS Grupe,
@@ -25,14 +25,13 @@ namespace AkademineIS.Database
                 FROM Studentai s
                 JOIN Naudotojai n ON s.NaudotojasId = n.Id
                 JOIN Grupes g ON s.GrupeId = g.Id
-                JOIN Dalykai d
-                LEFT JOIN Pazymiai p 
-                        ON p.StudentasId = s.Id AND p.DalykasId = d.Id
-                WHERE s.Id = @studentId;
+                JOIN Dalykai d ON d.Id = @dalykasId
+                LEFT JOIN Pazymiai p ON p.StudentasId = s.Id AND p.DalykasId = @dalykasId
+                WHERE s.GrupeId = @grupeId;
                 ";
 
             using var cmd = new SqliteCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@studentId", studentId);
+            cmd.Parameters.AddWithValue("@studentasId", studentasId);
 
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -46,6 +45,7 @@ namespace AkademineIS.Database
                     Dalykas = reader.GetString(4),
                     Pazymys = reader.IsDBNull(5) ? (int?)null : reader.GetInt32(5)
                 });
+
             }
 
             return list;

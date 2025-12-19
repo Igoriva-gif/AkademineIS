@@ -76,9 +76,9 @@
             // 
             btnUzkrauti.Location = new Point(577, 160);
             btnUzkrauti.Name = "btnUzkrauti";
-            btnUzkrauti.Size = new Size(294, 34);
+            btnUzkrauti.Size = new Size(294, 43);
             btnUzkrauti.TabIndex = 4;
-            btnUzkrauti.Text = "Užkrauti studentų sąrašą";
+            btnUzkrauti.Text = "Užkrauti sąrašą";
             btnUzkrauti.UseVisualStyleBackColor = true;
             btnUzkrauti.Click += btnUzkrauti_Click;
             // 
@@ -86,17 +86,17 @@
             // 
             dgvPazymiai.AllowUserToAddRows = false;
             dgvPazymiai.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvPazymiai.Location = new Point(550, 209);
+            dgvPazymiai.Location = new Point(389, 209);
             dgvPazymiai.Name = "dgvPazymiai";
             dgvPazymiai.RowHeadersWidth = 62;
-            dgvPazymiai.Size = new Size(360, 225);
+            dgvPazymiai.Size = new Size(672, 225);
             dgvPazymiai.TabIndex = 5;
             // 
             // btnIssaugoti
             // 
-            btnIssaugoti.Location = new Point(577, 450);
+            btnIssaugoti.Location = new Point(577, 440);
             btnIssaugoti.Name = "btnIssaugoti";
-            btnIssaugoti.Size = new Size(294, 34);
+            btnIssaugoti.Size = new Size(294, 44);
             btnIssaugoti.TabIndex = 6;
             btnIssaugoti.Text = "Išsaugoti pažymius";
             btnIssaugoti.UseVisualStyleBackColor = true;

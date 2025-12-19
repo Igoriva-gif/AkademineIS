@@ -33,6 +33,7 @@
             label2 = new Label();
             txtPassword = new TextBox();
             btnLogin = new Button();
+            label3 = new Label();
             SuspendLayout();
             // 
             // txtLogin
@@ -73,20 +74,30 @@
             // 
             // btnLogin
             // 
-            btnLogin.Location = new Point(292, 228);
+            btnLogin.Enabled = false;
+            btnLogin.Location = new Point(304, 225);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(112, 34);
+            btnLogin.Size = new Size(133, 40);
             btnLogin.TabIndex = 4;
             btnLogin.Text = "Prisijungti";
             btnLogin.UseVisualStyleBackColor = true;
-            btnLogin.Enabled = false;
-            btnLogin.Click += this.btnLogin_Click;
+            btnLogin.Click += btnLogin_Click;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(304, 69);
+            label3.Name = "label3";
+            label3.Size = new Size(121, 25);
+            label3.TabIndex = 5;
+            label3.Text = "Akademinė IS";
             // 
             // PrisijungimoForma
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label3);
             Controls.Add(btnLogin);
             Controls.Add(txtPassword);
             Controls.Add(label2);
@@ -124,5 +135,6 @@
         private Label label2;
         private TextBox txtPassword;
         private Button btnLogin;
+        private Label label3;
     }
 }

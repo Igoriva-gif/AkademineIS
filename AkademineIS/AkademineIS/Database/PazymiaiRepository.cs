@@ -22,8 +22,7 @@ SELECT s.Id AS StudentasId,
 FROM Studentai s
 JOIN Naudotojai n ON s.NaudotojasId = n.Id
 JOIN Grupes g ON s.GrupeId = g.Id
-LEFT JOIN Pazymiai p 
-       ON p.StudentasId = s.Id AND p.DalykasId = @dalykasId
+LEFT JOIN Pazymiai p ON p.StudentasId = s.Id AND p.DalykasId = @dalykasId
 WHERE s.GrupeId = @grupeId;
 ";
 
@@ -93,5 +92,35 @@ WHERE s.GrupeId = @grupeId;
                 cmdInsert.ExecuteNonQuery();
             }
         }
+        public IEnumerable<PazymioEilute> GetForStudent(int studentasId)
+        {
+            var list = new List<PazymioEilute>();
+
+            using var conn = Database.GetConnection();
+            string sql = @"
+                SELECT d.Pavadinimas AS Dalykas,
+                       p.Verte AS Pazymys
+                FROM Pazymiai p
+                JOIN Dalykai d ON d.Id = p.DalykasId
+                WHERE p.StudentasId = @studentasId
+                ORDER BY d.Pavadinimas;
+                ";
+
+            using var cmd = new SqliteCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@studentasId", studentasId);
+
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                list.Add(new PazymioEilute
+                {
+                    Dalykas = reader.GetString(0),
+                    Pazymys = reader.IsDBNull(1) ? (int?)null : reader.GetInt32(1)
+                });
+            }
+
+            return list;
+        }
+
     }
 }

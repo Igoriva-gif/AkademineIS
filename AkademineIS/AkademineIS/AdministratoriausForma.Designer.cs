@@ -91,20 +91,20 @@ namespace AkademineIS
             dgvGrupes.Name = "dgvGrupes";
             dgvGrupes.ReadOnly = true;
             dgvGrupes.RowHeadersWidth = 62;
-            dgvGrupes.Size = new Size(347, 440);
+            dgvGrupes.Size = new Size(347, 152);
             dgvGrupes.TabIndex = 1;
             dgvGrupes.CellContentClick += dataGridView1_CellContentClick;
             // 
             // txtNaujaGrupe
             // 
-            txtNaujaGrupe.Location = new Point(151, 530);
+            txtNaujaGrupe.Location = new Point(161, 240);
             txtNaujaGrupe.Name = "txtNaujaGrupe";
             txtNaujaGrupe.Size = new Size(129, 31);
             txtNaujaGrupe.TabIndex = 2;
             // 
             // btnPridetiGrupe
             // 
-            btnPridetiGrupe.Location = new Point(55, 577);
+            btnPridetiGrupe.Location = new Point(65, 287);
             btnPridetiGrupe.Name = "btnPridetiGrupe";
             btnPridetiGrupe.Size = new Size(225, 42);
             btnPridetiGrupe.TabIndex = 3;
@@ -114,7 +114,7 @@ namespace AkademineIS
             // 
             // btnPasalintiGrupe
             // 
-            btnPasalintiGrupe.Location = new Point(12, 625);
+            btnPasalintiGrupe.Location = new Point(22, 335);
             btnPasalintiGrupe.Name = "btnPasalintiGrupe";
             btnPasalintiGrupe.Size = new Size(326, 46);
             btnPasalintiGrupe.TabIndex = 4;
@@ -163,7 +163,7 @@ namespace AkademineIS
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(28, 536);
+            label3.Location = new Point(38, 246);
             label3.Name = "label3";
             label3.Size = new Size(127, 25);
             label3.TabIndex = 9;
@@ -363,7 +363,7 @@ namespace AkademineIS
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(860, 901);
+            label12.Location = new Point(150, 415);
             label12.Name = "label12";
             label12.Size = new Size(73, 25);
             label12.TabIndex = 32;
@@ -372,17 +372,17 @@ namespace AkademineIS
             // dgvDalykai
             // 
             dgvDalykai.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDalykai.Location = new Point(668, 938);
+            dgvDalykai.Location = new Point(12, 455);
             dgvDalykai.Name = "dgvDalykai";
             dgvDalykai.ReadOnly = true;
             dgvDalykai.RowHeadersWidth = 62;
-            dgvDalykai.Size = new Size(467, 290);
+            dgvDalykai.Size = new Size(347, 152);
             dgvDalykai.TabIndex = 33;
             // 
             // label13
             // 
             label13.AutoSize = true;
-            label13.Location = new Point(668, 1270);
+            label13.Location = new Point(25, 629);
             label13.Name = "label13";
             label13.Size = new Size(176, 25);
             label13.TabIndex = 34;
@@ -390,14 +390,14 @@ namespace AkademineIS
             // 
             // txtNaujasDalykas
             // 
-            txtNaujasDalykas.Location = new Point(841, 1264);
+            txtNaujasDalykas.Location = new Point(198, 623);
             txtNaujasDalykas.Name = "txtNaujasDalykas";
             txtNaujasDalykas.Size = new Size(150, 31);
             txtNaujasDalykas.TabIndex = 35;
             // 
             // btnPridetiDalyka
             // 
-            btnPridetiDalyka.Location = new Point(668, 1315);
+            btnPridetiDalyka.Location = new Point(86, 666);
             btnPridetiDalyka.Name = "btnPridetiDalyka";
             btnPridetiDalyka.Size = new Size(204, 45);
             btnPridetiDalyka.TabIndex = 36;
@@ -407,7 +407,7 @@ namespace AkademineIS
             // 
             // btnPasalintiDalyka
             // 
-            btnPasalintiDalyka.Location = new Point(915, 1315);
+            btnPasalintiDalyka.Location = new Point(80, 714);
             btnPasalintiDalyka.Name = "btnPasalintiDalyka";
             btnPasalintiDalyka.Size = new Size(220, 45);
             btnPasalintiDalyka.TabIndex = 37;

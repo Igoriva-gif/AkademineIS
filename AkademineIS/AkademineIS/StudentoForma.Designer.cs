@@ -36,11 +36,11 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(681, 97);
+            label1.Location = new Point(690, 87);
             label1.Name = "label1";
-            label1.Size = new Size(80, 25);
+            label1.Size = new Size(84, 25);
             label1.TabIndex = 0;
-            label1.Text = "Pažymiai";
+            label1.Text = "Pažymiai:";
             // 
             // dgvPazymiai
             // 

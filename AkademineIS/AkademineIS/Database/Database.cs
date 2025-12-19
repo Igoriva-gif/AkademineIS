@@ -74,6 +74,8 @@ CREATE TABLE IF NOT EXISTS Pazymiai (
     FOREIGN KEY (StudentasId) REFERENCES Studentai(Id),
     FOREIGN KEY (DalykasId) REFERENCES Dalykai(Id)
 );
+CREATE UNIQUE INDEX IF NOT EXISTS idx_pazymiai_studentas_dalykas
+ON Pazymiai(StudentasId, DalykasId);
 ";
 
             using var cmd = new SqliteCommand(sql, conn);

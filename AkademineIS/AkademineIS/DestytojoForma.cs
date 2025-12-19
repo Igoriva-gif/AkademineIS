@@ -88,13 +88,14 @@ namespace AkademineIS
             }
 
             _pasirinktaGrupeId = grupe.Id;
-            _pasirinktasDalykasId = dalykas.Id;
+            _pasirinktasDalykasId = Convert.ToInt32(cmbDalykas.SelectedValue);
 
             var eilutes = _pazymiaiRepo
                 .GetByGrupeAndDalykas(_pasirinktaGrupeId, _pasirinktasDalykasId)
                 .ToList();
 
             dgvPazymiai.DataSource = eilutes;
+            SutvarkytiPazymiuLentele();
 
             foreach (DataGridViewColumn col in dgvPazymiai.Columns)
             {
@@ -104,7 +105,7 @@ namespace AkademineIS
 
         private void btnIssaugoti_Click(object sender, EventArgs e)
         {
-            {
+            
                 if (dgvPazymiai.DataSource is not List<PazymioEilute> eilutes)
                 {
                     MessageBox.Show("Nėra duomenų išsaugojimui.");
@@ -128,7 +129,7 @@ namespace AkademineIS
                             return;
                         }
 
-                        _pazymiaiRepo.SetPazymys(eil.StudentasId, _pasirinktasDalykasId, paz);
+                        _pazymiaiRepo.SetPazymys(eil.StudentasId, _pasirinktasDalykasId, eil.Pazymys.Value);
                     }
 
                     MessageBox.Show("Pažymiai išsaugoti.");
@@ -138,6 +139,26 @@ namespace AkademineIS
                     MessageBox.Show("Klaida išsaugant pažymius: " + ex.Message);
                 }
             }
+        private void SutvarkytiPazymiuLentele()
+        {
+            if (dgvPazymiai.Columns["StudentasId"] != null)
+                dgvPazymiai.Columns["StudentasId"].Visible = false;
+
+            if (dgvPazymiai.Columns["Dalykas"] != null)
+                dgvPazymiai.Columns["Dalykas"].Visible = false;
+
+            if (dgvPazymiai.Columns["StudentasVardas"] != null)
+                dgvPazymiai.Columns["StudentasVardas"].HeaderText = "Studento vardas";
+
+            if (dgvPazymiai.Columns["StudentasPavarde"] != null)
+                dgvPazymiai.Columns["StudentasPavarde"].HeaderText = "Studento pavardė";
+
+            if (dgvPazymiai.Columns["Grupe"] != null)
+                dgvPazymiai.Columns["Grupe"].HeaderText = "Grupė";
+
+            if (dgvPazymiai.Columns["Pazymys"] != null)
+                dgvPazymiai.Columns["Pazymys"].HeaderText = "Pažymys";
         }
+
     }
 }

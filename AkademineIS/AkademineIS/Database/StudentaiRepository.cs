@@ -22,7 +22,7 @@ SELECT s.Id,
 FROM Studentai s
 JOIN Naudotojai n ON s.NaudotojasId = n.Id
 JOIN Grupes g ON s.GrupeId = g.Id
-WHERE n.Role = 'STUDENT';
+WHERE n.Role = 'STUDENTAS';
 ";
 
             using var cmd = new SqliteCommand(sql, conn);
@@ -43,7 +43,7 @@ WHERE n.Role = 'STUDENT';
             return list;
         }
 
-        public void AddStudentas(string vardas, string pavarde, string login, string password, int grupesId)
+        public void AddStudentas(string vardas, string pavarde, string login, string password, string grupeId)
         {
             using var conn = Database.GetConnection();
             using var tx = conn.BeginTransaction();
@@ -81,7 +81,7 @@ WHERE n.Role = 'STUDENT';
                 using (var cmdStud = new SqliteCommand(insertStudentSql, conn, tx))
                 {
                     cmdStud.Parameters.AddWithValue("@naudotojasId", naudotojasId);
-                    cmdStud.Parameters.AddWithValue("@grupeId", grupesId);
+                    cmdStud.Parameters.AddWithValue("@grupeId", grupeId);
 
                     cmdStud.ExecuteNonQuery();
                 }
@@ -128,8 +128,8 @@ WHERE n.Role = 'STUDENT';
                     cmdMarks.ExecuteNonQuery();
                 }
 
-                const string deleteStudentSql = "DELETE FROM Studentai WHERE Id = @id";
-                using (var cmdStud = new SqliteCommand(deleteStudentSql, conn, tx))
+                const string deleteStudentasSql = "DELETE FROM Studentai WHERE Id = @id";
+                using (var cmdStud = new SqliteCommand(deleteStudentasSql, conn, tx))
                 {
                     cmdStud.Parameters.AddWithValue("@id", studentasId);
                     cmdStud.ExecuteNonQuery();
@@ -157,22 +157,6 @@ WHERE n.Role = 'STUDENT';
                 tx.Rollback();
                 throw;
             }
-        }
-
-
-        public void PridetiStudenta(string vardas, string pavarde, string login, string password)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddStudent(string vardas, string pavarde, string login, string password, int grupeId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteStudent(int studentasId)
-        {
-            throw new NotImplementedException();
         }
     }
 }
